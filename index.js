@@ -2,11 +2,15 @@ const express = require('express')
 //as i want to read one time from this file so i wont use fs.readfile
 const file = require('./TestData.json')
 const app = express();
+const cors = require('cors');
+
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json())
 
-
+app.use(cors({
+  origin: '*'
+}));
 
 /*
 Get10Words Logic
