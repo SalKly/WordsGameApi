@@ -3,6 +3,8 @@ const express = require('express')
 const file = require('./TestData.json')
 const app = express();
 const cors = require('cors');
+const bodyParser = require("body-parser");
+
 
 const PORT = process.env.PORT || 5000;
 app.use(express.json())
