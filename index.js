@@ -5,9 +5,10 @@ const app = express();
 const cors = require('cors');
 
 const PORT = process.env.PORT || 5000;
-
 app.use(express.json())
-
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use(cors({
   origin: '*'
 }));
