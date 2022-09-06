@@ -1,0 +1,83 @@
+{
+  "wordList": [
+    {
+      "id": 1,
+      "word": "slowly",
+      "pos": "verb"
+    },
+    {
+      "id": 2,
+      "word": "ride",
+      "pos": "verb"
+    },
+    {
+      "id": 3,
+      "word": "bus",
+      "pos": "verb"
+    },
+    {
+      "id": 4,
+      "word": "commute",
+      "pos": "verb"
+    },
+    {
+      "id": 5,
+      "word": "emissions",
+      "pos": "verb"
+    },
+    {
+      "id": 6,
+      "word": "walk",
+      "pos": "verb"
+    },
+    {
+      "id": 7,
+      "word": "fast",
+      "pos": "verb"
+    },
+    {
+      "id": 8,
+      "word": "car",
+      "pos": "verb"
+    },
+    {
+      "id": 9,
+      "word": "crowded",
+      "pos": "verb"
+    },
+    {
+      "id": 10,
+      "word": "arrival",
+      "pos": "verb"
+    },
+    {
+      "id": 11,
+      "word": "emit",
+      "pos": "verb"
+    },
+    {
+      "id": 12,
+      "word": "independent",
+      "pos": "verb"
+    },
+    {
+      "id": 13,
+      "word": "convenient",
+      "pos": "verb"
+    },
+    {
+      "id": 14,
+      "word": "lane",
+      "pos": "verb"
+    },
+    {
+      "id": 15,
+      "word": "heavily",
+      "pos": "verb"
+    }
+  ],
+  "scoresList": [
+    20, 90, 100, 50, 10, 50, 60, 0, 60, 10, 90, 30, 100, 30, 20, 90, 40, 20, 10,
+    60, 50, 100, 50, 80, 50, 80, 60, 80, 10, 40
+  ]
+}
