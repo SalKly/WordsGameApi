@@ -2,20 +2,49 @@ const express = require('express')
 //as i want to read one time from this file so i wont use fs.readfile
 const file = require('./TestData.json')
 const app = express();
+const PORT = process.env.PORT || 5000;
+
 app.use(express.json())
 
 
 
+/*
+Get10Words Logic
+ 1)we loop on the arr variable that when returned should contain the needed words so if it reaches length of 10 then we stop 
+ 2)in the loop first we get a random word from the WorListHelper which is a clone of the WordList 
+ 3)After getting the random number we have 3 steps
+   a)pop the choosen word from the WordListHelpr in order to provide unieque words and decrease the uncertanity of the math.random function
+   b)check the posObj which is an object that store a unique category when found (verb,noun,adj,adv) 
+   we check in the word.pos if this category doesnt exist in the object then we add it 
+   we do that in order to be sure when we finish that we have the 4 categories 
+  4)As we should have 4 categories in the first 6 atleast on of the category is choosen but starting from 7 we need to makse 
+  sure that all the categoreis exist so we add the condition of length 7 and then we add what is left  
+  
+  5)the code seems bigger than it should be as there is ways much cleaner but using this way we will make sure that 
+   the choices are uncertain where if i added the first 4 as a unique category then started generating randoms for the next 6
+   there will be a pattern as the fist 4 are always different the  student will techincaly know the answer of the third one
+   so my main focus was unpredictablity
+ */
 
 
 
+function HandleRem(wordListHelper, arr, key) {
+  let Filling = wordListHelper.filter((item) => item.pos == key)
+  if (Filling.length !== 0) {
+    let word = Filling[Math.floor(Math.random() * Filling.length)]
+    let indexToRemove = wordListHelper.indexOf(word);
+    wordListHelper.splice(indexToRemove, 1);
+    arr.push(word)
 
+  }
+
+}
 
 function get10Words(quantity) {
   const { wordList } = file
   const wordListHelper = [...wordList];
 
-  const posArray = {};
+  const posObj = {};
   const arr = []
   while (arr.length < quantity) {
 
@@ -23,65 +52,41 @@ function get10Words(quantity) {
     let indexToRemove = wordListHelper.indexOf(word);
     wordListHelper.splice(indexToRemove, 1);
 
-    if (!posArray[word.pos]) {
-      posArray[word.pos] = 1
+    if (!posObj[word.pos]) {
+      posObj[word.pos] = 1
     }
     arr.push(word)
 
 
 
     if (arr.length === 7) {
-      if (Object.keys(posArray).length !== 4) {
+      if (Object.keys(posObj).length !== 4) {
 
-        if (!posArray['adjective']) {
-          let Filling = wordListHelper.filter((item) => item.pos == "adjective")
-          if (Filling.length !== 0) {
-            let word = Filling[Math.floor(Math.random() * Filling.length)]
-            let indexToRemove = wordListHelper.indexOf(word);
-            wordListHelper.splice(indexToRemove, 1);
 
-            arr.push(word)
+        if (!posObj['adjective']) {
 
-          }
+          HandleRem(wordListHelper, arr, 'adjective')
+
 
         }
-        if (!posArray['noun']) {
-          let Filling = wordListHelper.filter((item) => item.pos == "noun")
-          if (Filling.length !== 0) {
-            let word = Filling[Math.floor(Math.random() * Filling.length)]
-            let indexToRemove = wordListHelper.indexOf(word);
-            wordListHelper.splice(indexToRemove, 1);
-            console.log(word.pos)
+        if (!posObj['noun']) {
 
-            arr.push(word)
+          HandleRem(wordListHelper, arr, 'noun')
 
-          }
+
 
         }
-        if (!posArray['verb']) {
-          let Filling = wordListHelper.filter((item) => item.pos == "verb")
-          if (Filling.length !== 0) {
-            let word = Filling[Math.floor(Math.random() * Filling.length)]
-            let indexToRemove = wordListHelper.indexOf(word);
-            wordListHelper.splice(indexToRemove, 1);
-            console.log(word.pos)
+        if (!posObj['verb']) {
 
-            arr.push(word)
+          HandleRem(wordListHelper, arr, 'verb')
 
-          }
+
 
         }
-        if (!posArray['adverb']) {
-          let Filling = wordListHelper.filter((item) => item.pos == "adverb")
-          if (Filling.length !== 0) {
-            let word = Filling[Math.floor(Math.random() * Filling.length)]
-            let indexToRemove = wordListHelper.indexOf(word);
-            wordListHelper.splice(indexToRemove, 1);
-            console.log(word.pos)
+        if (!posObj['adverb']) {
 
-            arr.push(word)
+          HandleRem(wordListHelper, arr, 'adverb')
 
-          }
 
         }
 
@@ -98,10 +103,7 @@ function get10Words(quantity) {
 
 
 app.get("/", (req, res) => {
-  /* 2 loops first one will loop untill the set length is equal 4 
-    and on each loop we check if the pos is still 1 then we add it
-     if not then we remove it 
-  */
+
   res.send(get10Words(10))
 
 })
@@ -125,6 +127,6 @@ app.post("/Rank", (req, res) => {
 
 })
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log("Server is Running")
 })
